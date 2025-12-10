@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja | Planilha Financeira</title>
+
+<style>
+    body { 
+        margin:0; 
+        font-family:Arial, sans-serif; 
+        background:#f5f5f5; 
+    }
+
+    header { 
+        background:#111; 
+        color:white; 
+        padding:20px; 
+        text-align:center; 
+        font-size:22px; 
+        font-weight:bold; 
+    }
+
+    h3 {
+        text-align: center;
+        font-size: smaller;
+    }
+
+    /* GRID DOS PRODUTOS */
+    .container { 
+        width:90%; 
+        max-width:1100px; 
+        margin:40px auto;
+        display:grid; 
+        grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); 
+        gap:25px; 
+    }
+
+    .product-card { 
+        background:white; 
+        border-radius:10px; 
+        padding:15px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.1); 
+        transition:0.2s; 
+        cursor:pointer; 
+    }
+
+    .product-card:hover { 
+        transform:scale(1.03); 
+    }
+
+    .product-card img { 
+        width:100%; 
+        border-radius:8px; 
+    }
+
+    .product-title { 
+        margin:12px 0 5px; 
+        font-size:18px; 
+        font-weight:bold; 
+    }
+
+    .price { 
+        color:#008000; 
+        font-weight:bold; 
+        margin-bottom:10px; 
+    }
+
+    footer {
+        background: #111;
+        color: #ddd;
+        text-align: center;
+        padding: 18px;
+        margin-top: 50px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    footer a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* ------------------------------ */
+    /* DESCRIÇÃO ABAIXO DOS CARDS */
+    /* ------------------------------ */
+    .descricao-produto {
+        width: 90%;
+        max-width: 900px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .descricao-produto h2 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .descricao-produto ul {
+        margin-top: 15px;
+        padding-left: 20px;
+    }
+
+    .descricao-produto ul li {
+        margin-bottom: 10px;
+    }
+
+
+    /* ------------------------------ */
+    /* MODAL PREMIUM */
+    /* ------------------------------ */
+    #modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        z-index: 9999;
+    }
+
+    #modal-content {
+        background: white;
+        width: 95%;
+        max-width: 850px;
+        border-radius: 14px;
+        padding: 25px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    #main-img {
+        width: 100%;
+        max-height: 450px;
+        object-fit: contain;
+        border-radius: 10px;
+        background: #f5f5f5;
+        padding: 10px;
+    }
+
+    .thumbs {
+        margin-top: 15px;
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+
+    .thumbs img {
+        width: 90px;
+        height: 55px;
+        object-fit: cover;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: 0.2s;
+    }
+
+    .thumbs img:hover {
+        border-color: #3b82f6;
+    }
+
+    .thumb-active {
+        border-color: #3b82f6 !important;
+    }
+
+    .buy-btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        margin-top: 20px;
+        background: #2563eb;
+        color: white;
+        text-align: center;
+        font-size: 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .buy-btn:hover {
+        background: #1e4fcc;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #444;
+    }
+</style>
+</head>
+
+<body>
+
+<header>Loja do Planilha Financeira</header>
+<h3>Aqui você encontra produtos digitais para facilitar sua gestão financeira pessoal e profissional.</h3>
+
+<!-- GRID DE PRODUTOS -->
+<div class="container">
+
+    <div class="product-card" onclick="openModal(0)">
+        <img src="principal.jpg">
+        <div class="product-title">Planilha Financeira Completa</div>
+        <div class="price">R$ 20,00</div>
+    </div>
+
+    <div class="product-card" onclick="openModal(1)">
+        <img src="em_breve.jpg">
+        <div class="product-title">Em breve nova versão</div>
+        <div class="price"></div>
+    </div>
+
+</div>
+
+<!-- DESCRIÇÃO ABAIXO DOS CARDS -->
+<div class="descricao-produto">
+    <h2>🧾 Sobre a Planilha Financeira Completa</h2>
+
+    <p>
+        A Planilha Financeira foi desenvolvida para ajudar você a ter 
+        <strong>controle total da sua vida financeira</strong>, de forma prática, visual e totalmente automatizada.
+    </p>
+
+    <p>Com ela, você acompanha:</p>
+
+    <ul>
+        <li>Resumo mensal inteligente, mostrando quanto já entrou, quanto saiu e quanto ainda falta para atingir suas metas.</li>
+        <li>Gráfico de gastos por categoria, ajudando a identificar onde está indo seu dinheiro.</li>
+        <li>Painel visual de entradas e despesas, com porcentagens e classificações essenciais.</li>
+        <li>Controle de contas fixas, permitindo comparar o valor planejado com o valor real pago.</li>
+        <li>Gestão de reservas e investimentos, com acompanhamento por objetivo e tipo de aplicação.</li>
+        <li>Indicadores automáticos que mostram metas alcançadas, valores restantes e alertas importantes.</li>
+    </ul>
+
+    <p>
+        Tudo isso reunido em um dashboard moderno, intuitivo e preparado para quem quer 
+        <strong>organizar suas finanças, gastar melhor e guardar mais dinheiro</strong> 
+        com segurança e clareza.
+    </p>
+</div>
+
+
+<!-- MODAL -->
+<div id="modal">
+    <div id="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+
+        <img id="main-img" src="">
+
+        <div class="thumbs" id="thumbs"></div>
+
+        <a id="buy-link" class="buy-btn" target="_blank">Comprar Agora</a>
+    </div>
+</div>
+
+<script>
+    const products = [
+        {
+            title: "Planilha Financeira Completa",
+            price: "20,00",
+            images: [
+                "Tutorial.jpg",
+                "table.jpg",
+                "entradas_e_gastos.jpg",
+                "reservas.jpg"    
+            ],
+            link: "https://pay.kiwify.com.br/hNXm2va"
+        },
+        {
+            title: "Gerador de Controle Pessoal",
+            price: "14,90",
+            images: [
+                "em_breve.jpg",
+                "em_breve.jpg"
+            ],
+            link: ""
+        }
+    ];
+
+    function openModal(index) {
+        const modal = document.getElementById("modal");
+        const mainImg = document.getElementById("main-img");
+        const thumbs = document.getElementById("thumbs");
+        const buyLink = document.getElementById("buy-link");
+
+        const p = products[index];
+
+        mainImg.src = p.images[0];
+        buyLink.href = p.link;
+
+        thumbs.innerHTML = "";
+
+        p.images.forEach((img, i) => {
+            const isActive = i === 0 ? "thumb-active" : "";
+            thumbs.innerHTML += `
+                <img src="${img}" class="${isActive}"
+                     onclick="
+                        document.getElementById('main-img').src='${img}';
+                        document.querySelectorAll('.thumbs img').forEach(t => t.classList.remove('thumb-active'));
+                        this.classList.add('thumb-active');
+                     ">
+            `;
+        });
+
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+</script>
+
+<footer>
+    © 2025 Loja do Planilha Financeira — Todos os direitos reservados.
+</footer>
+
+</body>
+</html>
